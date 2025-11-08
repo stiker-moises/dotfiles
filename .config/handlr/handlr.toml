@@ -1,2 +1,2 @@
 enable_selector = true
-selector = "wofi -dmenu -p 'Open With: '"
+selector = "tofi --prompt-text='Open With: '"
