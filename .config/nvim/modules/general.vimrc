@@ -2,6 +2,12 @@ syntax on
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
 set nospell
+set nocompatible
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+set number
 
 "abbreviations
 abbrev funciton function
@@ -177,3 +183,7 @@ let g:netrw_browse_split = 2
 let g:vrfr_rg = 'true'
 let g:netrw_banner = 0
 let g:netrw_winsize = 25
+set swapfile
+set directory^=~/.local/state/nvim/swap//
+set undofile
+set undodir^=~/.local/state/nvim/undo//

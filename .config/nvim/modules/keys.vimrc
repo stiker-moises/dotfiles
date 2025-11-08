@@ -1,119 +1,112 @@
-"<c-q> for escaping insert and visual modes
+
+let mapleader = " "
+
+"<c-q> for escaping insert and visual modes inoremap <c-q> <esc> vnoremap <c-q> <esc>
 inoremap <c-q> <esc>
 vnoremap <c-q> <esc>
-
-"backspace for deleting selection
-"vnoremap <BS> d
 
 "uhhh you can read
 nnoremap ; :
 
-"sourcing your .vimrc
-nnoremap <leader>s :so %<cr>
+"moving around with htns in normal and visual modes
+nnoremap s l
+nnoremap n j
+nnoremap t k
+nnoremap l I
+xnoremap s l
+xnoremap n j
+xnoremap t k
+xnoremap l I
 
-"<c-a> to select all
-nnoremap <C-a> ggVG
+" --- Insert / append keys ---
+" e → insert at cursor
+nnoremap e i
+" E → append after cursor
+nnoremap E a
+" i / I kept for normal Vim insert at line start
+nnoremap i e
 
-"Q to reformat paragraphs
-vmap Q gq
-nmap Q gqap
+"jump to first non-blank character (smart line start)
+nnoremap I ^
+xnoremap I ^
 
+" --- Visual & Normal Clipboard Integration ---
+"secondary clipboard eh you know it
+xnoremap <c-c> "+ygv
+" Cut to system clipboard (Visual)
+xnoremap <C-x> "+d
 "<c-v> for pasting text from the clipboard in insert mode
 inoremap <C-v> <C-r>+
+nnoremap <C-v> "+p
+" Normal-mode copy/cut (no visual exit)
+nnoremap <C-c> "+yy
+nnoremap <C-x> "+dd
 
 "to recover undo states in insert mode
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 
-"secondary clipboard eh you know it
-noremap <c-v> "+p
-noremap <c-x> "+d
-noremap <c-c> "+ygv
+"<c-a> to select all
+nnoremap <C-a> ggVG
 
-"moving around with htns in normal and visual modes
-nnoremap s l
-nnoremap t k
-nnoremap n j
-vnoremap n j
-vnoremap s l
-vnoremap t k
+"k for pasting
+nnoremap k p
+nnoremap K P
+xnoremap k p
+xnoremap K P
 
-"A for visual line mode ie. selecting per line
-nnoremap A V
-"v for pasting
-nnoremap v p
-"<c-r> for replace mode
-nnoremap <c-r> R
-"r/R for undo/redo
-nnoremap U <c-r>
-"V to go to the end of the line
-nnoremap V A
-"r/R for lowercasing and uppercasing in visual mode
-vnoremap r u
-vnoremap R U
+" --- Search navigation ---
+" j → next result, J → previous
+nnoremap j n
+nnoremap J N
+nnoremap N J
+xnoremap j n
+xnoremap J N
+xnoremap N J
 
-nnoremap I E
+" --- Undo / redo / replace ---
+nnoremap U <C-r>
+nnoremap <C-r> R
 
-"i to go to the end of a word
-nnoremap i e
-"a to enter visual mode
-nnoremap a v
-"e to enter insert/edit mode
-nnoremap e i
-"<bs> to delete a character in normal mode
-"nnoremap <bs> x
+" --- Numeric increment / decrement ---
+nnoremap <leader>. :normal! <C-a><CR>
+nnoremap <leader>, :normal! <C-x><CR>
 
-"writing changes with sudo
-cmap w!! w !sudo tee > /dev/null %
+" --- Split window management ---
+" Vertical / horizontal splits (focus new split)
+nnoremap <leader>v :vsplit<CR><C-w>w
+nnoremap <leader>h :split<CR><C-w>w
 
-"opening your init.vim
-map <leader>ev :e! ~/.config/nvim/init.vim<cr>
+" --- Tab management ---
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
+nnoremap <leader>0 :tablast<CR>
 
-"nonhighlighting search results
-nnoremap <leader>x :nohlsearch<CR>
+" --- Quote / bracket wrappers ---
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+nnoremap <leader>( viw<esc>a)<esc>hbi(<esc>lel
+nnoremap <leader>[ viw<esc>a]<esc>hbi[<esc>lel
 
-"putting words in quotes in normal mode
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+" --- Sudo write (NixOS pkexec) ---
+"cnoremap :w!! :w !pkexec tee % >/dev/null
 
-"splits
-nnoremap <C-i> :vsplit<cr>
-nnoremap <C-k> :split<cr>
-"moving between splits
-nnoremap <C-w> <C-w><C-w>
+" --- Backspace disabled in normal mode ---
+nnoremap <BS> <Nop>
+nnoremap <Space> <Nop>
+xnoremap <Space> <Nop>
+onoremap <Space> <Nop>
 
-"navigating between tabs
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 9gt
-noremap <leader>0 :tablast<cr>
+"Q to reformat paragraphs
+vnoremap Q gq
+nnoremap Q gqap
 
-"<c-d> or <c-e> to exit without saving
-nnoremap <C-d> :q!<cr>
-nnoremap <c-e> :q!<cr>
-"<c-s> to save and exit
-nnoremap <c-s> :wq<cr>
-
-nnoremap k *
-nnoremap j #
-
-nnoremap J gg
-nnoremap K G
-
-"onoremap p i{
-"onoremap ib( :<c-u>normal! f(vi(<cr>
-"onoremap il( :<c-u>normal! F)vi(<cr>
-
-"I can't remap buffers.
-
-"This can be expanded.
-"
-cnoremap <C-j> <C-g>
-"compressing empty lines
-cnoremap <C-x> v/./.,/./-1join<cr> 
+nnoremap p *
+nnoremap P #
