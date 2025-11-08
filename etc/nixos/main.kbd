@@ -1,0 +1,45 @@
+(defsrc
+	grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+	tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+	caps a    s    d    f    g    h    j    k    l    ;    '    ret
+	lsft z    x    c    v    b    n    m    ,    .    /    rsft
+	lctl lmet lalt           spc            ralt rmet rctl
+)
+(deflayer dvorak
+	grv  1    2    3    4    5    6    7    8    9    0    [    ]    bspc
+	tab  '    ,    .    p    y    f    g    c    r    l    /    =    \
+	@dvw a    o    e    u    i    d    h    t    n    s    -    ret
+	lsft ;    q    j    k    x    b    m    w    v    z    @lq
+	@dvc caps @dva           spc            ralt rmet rctl
+)
+(deflayer qwerty
+	grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+	tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+	lmet a    s    d    f    g    h    j    k    l    ;    '    ret
+	lsft z    x    c    v    b    n    m    ,    .    /    @ld
+	lctl caps lalt           spc            ralt rmet rctl
+)
+(deflayer layers-dv
+	_    _    _    _    _    _    _    _    _    _    _    _    _    _
+	_    _    _    _    _    _    _    _    _    _    _    _    _    _
+	_    _    _    _    _    _    _    _    _    _    _    _    _
+	@dv  _    _    _    _    _    _    _    _    _    _    _
+	_    _    _              _              _    _    _
+)
+(deflayer layers-qw
+	_    _    _    _    _    _    _    _    _    _    _    _    _    _
+	_    _    _    _    _    _    _    _    _    _    _    _    _    _
+	_    _    _    _    _    _    _    _    _    _    _    _    _
+	@qw  _    _    _    _    _    _    _    _    _    _    _
+	_    _    _              _              _    _    _
+)
+
+(defalias
+	qw (layer-switch qwerty)
+	dv (layer-switch dvorak)
+	dvc (multi (layer-toggle qwerty) lctl)
+	dvw (multi (layer-toggle qwerty) lmet)
+	dva (multi (layer-toggle qwerty) lalt)
+	lq (multi (layer-toggle layers-qw) rsft)
+	ld (multi (layer-toggle layers-dv) rsft)
+)

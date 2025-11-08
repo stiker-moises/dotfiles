@@ -1,41 +1,103 @@
 { config, pkgs, ... }:
 {
 imports = [
-	./amd.nix
+	./amdgpu.nix
+	./amdcpu.nix
+	./invidious.nix
+#	./hyprland-test.nix
+	./work.nix
 ];
+boot.kernelParams = [
+	"amd_pstate=active"
+	"amdgpu.ppfeaturemask=0xffffffff"
+	"iommu=pt"
+];
+programs.nix-ld = {
+	libraries = with pkgs; [
+	];
+};
+virtualisation.libvirtd = {
+	enable = true;
+	qemu = {
+		package = pkgs.qemu_kvm;
+		runAsRoot = true;
+		swtpm.enable = true;
+	};
+};
+users.users.communist = {
+	extraGroups = [ "libvirtd" "dialout" ];
+};
 environment.systemPackages = with pkgs; [
+	anydesk
 	bsnes-hd
 	cemu
 	chromium
-	citrix_workspace
-	discord
+	clonehero
+	lapce
+	helix
+	optipng
+	cosmic-ext-calculator
+	cosmic-ext-tweaks
 	dolphin-emu
 	element-desktop
-	gamescope
-	gnome-boxes
+	equibop
+#	gpt4all
+	inkscape
+	socat
+	bc
+	ironbar
+	iw4x-launcher
+	kdePackages.neochat
+	libva-utils
+	logiops
+	lsof
 	mgba
-	obs-studio
+	nheko
+	python314
+	qbittorrent
 	r2modman
-	ryujinx
-	spotifywm
-	stoken
-	teams-for-linux
+	spotify
 	telegram-desktop
-	wineWow64Packages.waylandFull
+	yarg
+	yt-dlp
+#	cosmic-notifications
 #	cosmic-osd
-#	cosmic-store
 #	cosmic-settings
+#	ironbar
+#	cosmic-files
+#	cosmic-notifications
+#	cosmic-panel
+#	cosmic-settings
+#	cosmic-store
+#	gpt4all
+#	piper
+#	python313Full
+#	python313Packages.pip
+#	python313Packages.virtualenv
+#	torzu
+#	vesktop
+#	wineWow64Packages.stagingFull
 ];
 
+hardware.keyboard.zsa.enable = true;
+
 nixpkgs.config.permittedInsecurePackages = [
-	"jitsi-meet-1.0.8043"
-	"electron-29.4.6"
+	"olm-3.2.16"
+#	"libxml2-2.13.8"
+#	"libsoup-2.74.3"
 ];
-#services.udev.extraRules = ''
-#  ACTION=="add" SUBSYSTEM=="pci" ATTR{vendor}=="0x1022" ATTR{device}=="0x1484" ATTR{power/wakeup}="disabled"
-#'';
-#virtualisation.libvirtd.enable = true;
-#environment.sessionVariables = {
-#	CMAKE_C_COMPILER="{pkgs.gcc}/bin/gcc"
+
+#services = {
+#	kanata = {
+#		keyboards.ergodox = {
+#			devices = ["/dev/input/by-id/usb-ZSA_Technology_Labs_Ergodox_EZ_5VoRX_MPxar-event-kbd"];
+#			extraDefCfg = ''
+#				process-unmapped-keys false
+#				concurrent-tap-hold yes
+#			'';
+#			config = builtins.readFile (./. + "/ergodox.kbd") + builtins.readFile (./. + "/chords.kbd");
+#		};
+#	};
+#	ratbagd.enable = true;
 #};
 }

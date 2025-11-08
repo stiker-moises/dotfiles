@@ -2,9 +2,11 @@
 {
 imports = [
 # uncomment your gpu
-#	./amd.nix
-#	./intel.nix
-#	./nvidia.nix
+#	./amdgpu.nix
+#	./intelgpu.nix
+#	./nvidiagpu.nix
+# and cpu
+#	./amdcpu.nix
 ];
 environment.systemPackages = with pkgs; [
 	#install things here
