@@ -1,2 +1,2 @@
 enable_selector = true
-selector = "walker -d --prompt-text='Open With: '"
+selector = "walker -d -p 'Open With:'"
