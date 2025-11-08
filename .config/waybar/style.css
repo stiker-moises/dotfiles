@@ -1,6 +1,23 @@
+@define-color bg_semitransparent rgba(0, 0, 0, .8);
+@define-color bg_transparent rgba(0, 0, 0, .3);
+@define-color bg_opaque rgba(0, 0, 0, 1);
+@define-color bg_none rgba(0, 0, 0, 0);
+@define-color inactive #909090;
+@define-color fg_bright #e0e0e0;
+@define-color fg_critical #f0f;
+@define-color trough rgba(80, 80, 80, 0.5);
+
 * {
 	font-family: "Noto Sans", "Font Awesome 6 Free Solid";
+	font-size: 14px;
+	min-height: 0px;
 }
+
+#workspaces {
+	margin-top: -6px;
+	margin-bottom: -6px;
+}
+
 #custom-mako.do-not-disturb,
 #clock.2:hover,
 #workspaces button.focused,
@@ -17,17 +34,20 @@
 #workspaces button.urgent {
 	background-color: @theme_selected_bg_color;
 }
+
 #clock.1,
 #clock.3,
 #pulseaudio-slider,
 window#waybar #window,
 #privacy-item.audio-in,
-#privacy-item.screenshare {
-	background-color: rgba(0, 0, 0, .8);
+#privacy-item.screenshare,
+#network.disconnected,
+#tray {
+	background: @bg_semitransparent;
 }
 
 window#waybar {
-	background-color: rgba(0, 0, 0, .3);
+	background-color: @bg_transparent;
 }
 
 #clock.2,
@@ -42,7 +62,7 @@ window#waybar {
 #wireplumber.icon,
 #idle_inhibitor,
 #window {
-	background: #000;
+	background: @bg_opaque;
 }
 
 #pulseaudio.sink.muted,
@@ -50,17 +70,10 @@ window#waybar {
 #pulseaudio.source.source-muted,
 #pulseaudio.name.muted,
 #network.wifi,
-#clock {
-	color: #b0b0b0;
-}
-
+#clock,
 #idle_inhibitor.deactivated,
 #custom-mako {
-	color: #909090;
-}
-
-#clock.2 {
-	color: #fff;
+	color: @inactive;
 }
 
 #workspaces * {
@@ -101,9 +114,11 @@ window#waybar {
 #workspaces button.urgent,
 #pulseaudio.name,
 #battery.time,
+#clock.2,
 #window {
-	color: #e0e0e0;
+	color: @fg_bright;
 }
+
 #clock,
 #pulseaudio,
 #wireplumber.icon,
@@ -126,6 +141,7 @@ window#waybar {
 	padding-right: 5px;
 	margin-left: 5px;
 }
+
 #pulseaudio.sink,
 #power-profiles-daemon,
 #wireplumber.icon {
@@ -138,7 +154,7 @@ window#waybar {
 }
 
 #battery.icon.critical {
-	color: #f0f;
+	color: @fg_critical;
 }
 
 #clock,
@@ -150,26 +166,31 @@ window#waybar {
 	padding: 0px 5px 0px 5px;
 	margin: 0px 5px 0px 5px;
 }
+
 #power-profiles-daemon,
 #network.ssid,
 #battery.icon {
 	padding: 0px 5px 0px 5px;
 }
-
 #window,
+#pulseaudio.source {
+	padding: 0px 5px 0px 5px;
+	margin-left: 5px;
+}
+
 #custom-mako,
 #pulseaudio.sink,
-#pulseaudio.source,
 #pulseaudio.name,
 #wireplumber.icon,
 #idle_inhibitor {
-	padding: 0px 5px 0px 5px;
+	padding: 0px 10px 0px 5px;
 	margin-left: 5px;
 }
 
 #pulseaudio-slider {
 	padding: 0px 8px 0px 8px;
 	margin-left: 5px;
+	min-width: 160px;
 }
 
 #network.ethernet,
@@ -177,15 +198,6 @@ window#waybar.empty #window {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
 	opacity: 0;
-}
-
-#network.disconnected,
-#tray {
-	background: rgba(0, 0, 0, .8);
-}
-
-#pulseaudio-slider {
-	min-width: 160px;
 }
 
 #pulseaudio-slider slider {
@@ -196,24 +208,25 @@ window#waybar.empty #window {
 	padding: 0px;
 	min-height: 12px;
 	min-width: 12px;
-	box-shadow: inset 0px 0px 0px 40px rgba(0, 0, 0, 1), 0px 0px 0px 2px @theme_selected_bg_color;
-	background-color: #000;
+	box-shadow: inset 0px 0px 0px 40px @bg_opaque, 0px 0px 0px 2px @theme_selected_bg_color;
+	background-color: @bg_opaque;
 	border-radius: 100px;
 }
 
 #pulseaudio-slider trough {
-	background-color: rgba(80, 80, 80, 0.5);
+	background-color: @trough;
 }
 
 @keyframes flickerAnimation {
 	0% {color: @theme_selected_bg_color;}
 	10% {color: @theme_selected_bg_color;}
-	50% {color: black;}
+	50% {color: @bg_opaque;}
 	90% {color: @theme_selected_bg_color;}
 	100% {color: @theme_selected_bg_color;}
 }
+
 #privacy {
-	background-color: rgba(0, 0, 0, 0);
+	background-color: @bg_none;
 }
 
 #privacy-item.audio-in,
@@ -232,4 +245,3 @@ window#waybar.empty #window {
 	padding-left: 3px;
 	padding-right: 5px;
 }
-

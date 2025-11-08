@@ -1,12 +1,12 @@
 {
-	"layer": "top",	
+	"height": 26,
+	"layer": "top",
 	"position": "bottom",
 	"modules-left": [
-		"sway/workspaces",
 		"hyprland/workspaces",
+//		"ext/workspaces",
 		"custom/space",
 		"hyprland/submap",
-		"sway/mode",
 	],
 	"modules-center": [
 		"clock#1",
@@ -14,7 +14,6 @@
 		"clock#3"
 	],
 	"modules-right": [
-		"sway/window",
 		"hyprland/window",
 		"group/network",
 		"group/battery",
@@ -24,89 +23,64 @@
 		"group/misc",
 		"tray"
 	],
-	"sway/workspaces": {
-		"enable-bar-scroll": true,
-		"disable-scroll-wraparound": true,
-		"all-outputs": false,
-		"format": "{icon}",
-		"smooth-scrolling-threshold": "4",
-		"format-icons": {
-			"1": "1",
-			"2": "2",
-			"3": "3",
-			"4": "4",
-			"5": "5",
-			"6": "6",
-			"7": "7",
-			"8": "8",
-			"9": "9",
-			"10": "10"
-		}
-	},
 	"hyprland/workspaces": {
-		"enable-bar-scroll": true,
-		"disable-scroll-wraparound": true,
 		"all-outputs": false,
+		"disable-scroll-wraparound": true,
+		"enable-bar-scroll": true,
 		"show-special": true,
+		"smooth-scrolling-threshold": "4"
+	},
+	"ext/workspaces": {
+		"all-outputs": false,
+		"disable-scroll-wraparound": true,
+		"enable-bar-scroll": true,
 		"format": "{name}",
-		"smooth-scrolling-threshold": "4",
-		"on-click": "activate && hyprctl monitors -j | jaq -r '.[] | select(.focused == true) | .specialWorkspace.name' | sd 'special:' '' | xargs -I [] hyprctl dispatch togglespecialworkspace []",
-		"format-icons": {
-			"1": "1",
-			"2": "2",
-			"3": "3",
-			"4": "4",
-			"5": "5",
-			"6": "6",
-			"7": "7",
-			"8": "8",
-			"9": "9",
-			"10": "10",
-		}
+		"show-special": true,
+		"smooth-scrolling-threshold": "4"
 	},
 	"clock#1": {
 		"format": "{:%a}",
-		"timezone": "America/Indiana/Indianapolis",
 		"tooltip": false
 	},
 	"clock#2": {
-		"format": "{:%H:%M}",
-		"tooltip-format": "  <big>   {:%H:%M:%S}</big>\n<tt><small>{calendar}</small></tt>",
-		"timezone": "America/Indiana/Indianapolis",
-		"interval": 1,
-		"on-click": "qtalarm --toggleOnDup",
+		"actions":  {
+			"on-click-right": "mode"
+		},
 		"calendar": {
+			"format": {
+				"days":       "<span color='#ffffff'>{}</span>",
+				"months":     "<span color='#ffffff'><b>{}</b></span>",
+				"today":      "<span color='#ff0000'><b><u>{}</u></b></span>",
+				"weekdays":   "<span color='#cc0000'><b>{}</b></span>",
+				"weeks":      "<span color='#ff0000'><b>W{}</b></span>"
+			},
 			"mode": "month",
 			"mode-mon-col" : 3,
-			"weeks-pos" : "right",
 			"on-scroll" : 1,
-			"format": {
-				"months":     "<span color='#ffffff'><b>{}</b></span>",
-				"days":       "<span color='#ffffff'>{}</span>",
-				"weeks":      "<span color='#ff0000'><b>W{}</b></span>",
-				"weekdays":   "<span color='#cc0000'><b>{}</b></span>",
-				"today":      "<span color='#ff0000'><b><u>{}</u></b></span>"
-				}
-			},
-		"actions":  {
-			"on-click-right": "mode",
-		}
+			"weeks-pos" : "right"
+		},
+		"format": "{:%H:%M}",
+		"interval": 1,
+		"on-click": "qtalarm --toggleOnDup",
+		"tooltip-format": "  <big>   {:%H:%M:%S}</big>\n<tt><small>{calendar}</small></tt>"
 	},
 	"clock#3": {
 		"format": "{:%m-%d}",
-		"timezone": "America/Indiana/Indianapolis",
 		"tooltip": false
 	},
 	"idle_inhibitor": {
 		"format": "{icon:1}",
-		"tooltip": false,
 		"format-icons": {
 			"activated": "󰅶",
 			"deactivated": "󰾪"
-		}
+		},
+		"tooltip": false
 	},
 	"network#icon": {
-		"format-wifi": "{icon:1}",
+		"format": "",
+		"format-disconnected": "󰤭",
+		"format-ethernet": "",
+		"format-linked": "",
 		"format-icons": {
 			"wifi": [
 				"󰤯",
@@ -121,63 +95,61 @@
 				"<span color=\"#68f500\">󰤥</span>",
 				"<span color=\"#00ff00\">󰤨</span>" ]
 		},
-		"format-ethernet": "",
-		"format-disconnected": "󰤭",
+		"format-wifi": "{icon:1}",
 		"tooltip": false,
-		"on-click": "iwgtk",
+		"on-click": "iwgtk"
 	},
 	"network#ssid": {
-		"format-wifi": "{essid} {signalStrength:2}",
-		"format-ethernet": "",
+		"format": "",
 		"format-disconnected": "",
-		"tooltip": false,
+		"format-ethernet": "",
+		"format-linked": "",
+		"format-wifi": "{essid} {signalStrength:2}",
+		"max-length": 50,
 		"on-click": "iwgtk",
-		"max-length": 50
+		"tooltip": false
 	},
 	"pulseaudio#sink": {
 		"format": "{volume:2} {icon:1}",
 		"format-bluetooth": "{volume:2} {icon:1}",
-		"tooltip": true,
-		"format-muted": "{volume:2} {icon:1}",
 		"format-icons": {
-			"headphone": "󰋋",
-			"headphone-muted": "󰟎",
 			"alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_X4.iec958-stereo": "󰋋",
 			"alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_X4.iec958-stereo-muted": "󰟎",
-			"hdmi": "󰔂",
-			"hdmi-muted": "󰠻",
+			"car": "󰄋",
+			"car-muted": "󰸜",
+			"default": ["󰖀", "󰕾"],
+			"default-muted": "󰝟",
 			"hands-free": "󱡏",
 			"hands-free-muted": "󱡐",
+			"hdmi": "󰔂",
+			"hdmi-muted": "󰠻",
+			"headphone": "󰋋",
+			"headphone-muted": "󰟎",
 			"headset": "󰋎",
 			"headset-muted": "󰋐",
 			"phone": "󰏲",
 			"phone-muted": "󰷯",
 			"portable": "󰏲",
-			"portable-muted": "󰷯",
-			"car": "󰄋",
-			"car-muted": "󰸜",
-			"default": ["󰖀", "󰕾"],
-			"default-muted": "󰝟"
+			"portable-muted": "󰷯"
 		},
+		"format-muted": "{volume:2} {icon:1}",
 		"ignored-sinks": ["Easy Effects Sink"],
-		"smooth-scrolling-threshold": "4",
-		"scroll-step": "5",
-		"on-click-middle": "wpctl set-default $(pw-cli i $(pactl list sinks | rg --fixed-strings -B 1 \"$(pactl list sinks | rg Description: | sd '	Description: ' '' | sd 'Easy Effects Sink' '' | sd --fixed-strings \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" '' | rg '.' || echo \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" | tofi --prompt-text \" \" --height 40% --width 40% --auto-accept-single true )\" | rg Name: | awk '{print $2}' ) | rg -oP 'id: \\K\\w+') && notify-send --urgency=low --icon=/usr/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" -h string:x-canonical-private-synchronous:sink-state && pw-play --volume=0.2 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga &!",
-		"on-click-right": "wpctl set-mute @DEFAULT_SINK@ toggle",
-		"on-click": "pkill pavucontrol ; pavucontrol",
+		"on-click": "pkill -15 pavucontrol ; pavucontrol",
+		"on-click-middle": "wpctl set-default $(pw-dump | jaq -r '.[]|select(.type==\"PipeWire:Interface:Node\" and .info.props[\"media.class\"]==\"Audio/Sink\")|[.id,.info.props[\"node.name\"],.info.props[\"node.description\"]]|@tsv' | awk -F'\\t' -v d=\"$(wpctl inspect @DEFAULT_AUDIO_SINK@|awk -F'\\\"' '/node.name/{print $2;exit}')\" 'BEGIN{c=\"walker -x -d -p \\\"Audio Device: \\\"\"}$2!=d&&$2!=\"easyeffects_sink\"{a[$3]=$1;devs++;print $3|&c}END{if(devs>1){close(c,\"to\");c|&getline p;if(p!=\"\"){print a[p];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"p\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}else if(devs==1){for(k in a){print a[k];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"k\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}}') >/dev/null && pw-play --volume=0.2 /run/current-system/sw/share/sounds/freedesktop/stereo/audio-volume-change.oga >/dev/null &!",
+				"on-click-right": "wpctl set-mute @DEFAULT_SINK@ toggle",
+		"on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 5%- -l 2.0",
 		"on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 5%+ -l 2.0",
-		"on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 5%- -l 2.0"
+		"scroll-step": "5",
+		"smooth-scrolling-threshold": "4",
+		"tooltip": true
 	},
 	"wireplumber#icon": {
 		"format": "{volume:2} {icon:1}",
 		"format-bluetooth": "{volume:2} {icon:1}",
-		"tooltip": true,
-		"format-muted": "{volume:2} 󰝟",
-//		"format-muted": "{volume:2} {icon:1}",
 		"format-icons": {
 			"headphone": "󰋋",
 			"headphone-muted": "󰟎",
-			"hdmi": "󰔂",
+			"hdmi": "󰔂 ",
 			"hdmi-muted": "󰠻",
 			"hands-free": "󱡏",
 			"hands-free-muted": "󱡐",
@@ -192,121 +164,121 @@
 			"default": ["󰖀", "󰕾"],
 			"default-muted": "󰝟"
 		},
+		"format-muted": "{volume:2} 󰝟",
+//		"format-muted": "{volume:2} {icon:1}",
 		"ignored-sinks": ["Easy Effects Sink"],
-		"smooth-scrolling-threshold": "4",
-		"scroll-step": "5",
-		"on-click-middle": "wpctl set-default $(pw-cli i $(pactl list sinks | rg --fixed-strings -B 1 \"$(pactl list sinks | rg Description: | sd '	Description: ' '' | sd 'Easy Effects Sink' '' | sd --fixed-strings \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" '' | rg '.' || echo \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" | tofi --prompt-text \" \" --height 40% --width 40% --auto-accept-single true )\" | rg Name: | awk '{print $2}' ) | rg -oP 'id: \\K\\w+') && notify-send --urgency=low --icon=/usr/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" -h string:x-canonical-private-synchronous:sink-state && pw-play --volume=0.2 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga &!",
+		"on-click": "pkill -15 pavucontrol ; pavucontrol",
+		"on-click-middle": "wpctl set-default $(pw-dump | jaq -r '.[]|select(.type==\"PipeWire:Interface:Node\" and .info.props[\"media.class\"]==\"Audio/Sink\")|[.id,.info.props[\"node.name\"],.info.props[\"node.description\"]]|@tsv' | awk -F'\\t' -v d=\"$(wpctl inspect @DEFAULT_AUDIO_SINK@|awk -F'\\\"' '/node.name/{print $2;exit}')\" 'BEGIN{c=\"walker -x -d -p \\\"Audio Device: \\\"\"}$2!=d&&$2!=\"easyeffects_sink\"{a[$3]=$1;devs++;print $3|&c}END{if(devs>1){close(c,\"to\");c|&getline p;if(p!=\"\"){print a[p];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"p\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}else if(devs==1){for(k in a){print a[k];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"k\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}}') >/dev/null && pw-play --volume=0.2 /run/current-system/sw/share/sounds/freedesktop/stereo/audio-volume-change.oga >/dev/null &!",
 		"on-click-right": "wpctl set-mute @DEFAULT_SINK@ toggle",
-		"on-click": "pkill pavucontrol ; pavucontrol",
+		"on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 5%- -l 2.0",
 		"on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 5%+ -l 2.0",
-		"on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 5%- -l 2.0"
+		"scroll-step": "5",
+		"smooth-scrolling-threshold": "4",
+		"tooltip": true
 	},
 
 	"pulseaudio/slider": {
-		"min": 0,
 		"max": 100,
+		"min": 0,
 		"orientation": "horizontal"
 	},
 	"custom/space": {
 		"format": "  ",
 		"tooltip": false
 	},
-	"sway/mode": {
-		"format": "{}",
-		"max-length": 50
-	},
 	"tray": {
 		"spacing": 10
 	},
 	"battery#icon": {
+		"format": "{capacity:2} {icon:1}",
+		"format-charged": "{icon}",
+		"format-charging": "{capacity:2} {icon:1}",
+		"format-full": "{icon}",
+		"format-icons": {
+			"charged": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+			"charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅" ],
+			"discharging": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" ],
+			"full": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+			"plugged": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+		},
+		"format-plugged": "{icon}",
+		"events": {
+			"on-discharging-30": "notify-send --urgency=critical 'Battery Low' -h string:x-canonical-private-synchronous:battery-state",
+			"on-discharging-5": "notify-send --urgency=critical 'Critical Battery level!' -h string:x-canonical-private-synchronous:battery-state",
+			"on-charging-100": "notify-send --urgency=low 'Battery Full' -h string:x-canonical-private-synchronous:battery-state",
+			"on-charging": "notify-send --urgency=low 'Battery Charging' -h string:x-canonical-private-synchronous:battery-state",
+		},
 		"interval": 10,
+		"max-length": 25,
+		"on-click": "gnome-power-statistics",
 		"states": {
 			"warning": 30,
 			"critical": 5
 		},
-		"format": "{capacity:2} {icon:1}",
-		"format-plugged": "{icon}",
-		"format-charged": "{icon}",
-		"format-full": "{icon}",
-		"format-charging": "{capacity:2} {icon:1}",
-		"tooltip":false,
-		"format-icons": {
-			"discharging": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" ],
-			"charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅" ],
-			"plugged": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-			"charged": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-			"full": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-		},
-		"max-length": 25,
-		"on-click": "gnome-power-statistics"
+		"tooltip":false
 	},
 	"power-profiles-daemon": {
 		"format": "{icon:1}",
-		"tooltip-format": "Profile: {profile}\nDriver: {driver}",
-		"tooltip": true,
 		"format-icons": {
 			"default": "",
 			"performance": "",
 			"balanced": "",
 			"power-saver": ""
-		}
+		},
+		"tooltip": true,
+		"tooltip-format": "Profile: {profile}\nDriver: {driver}"
 	},
 	"battery#time": {
+		"format": "",
+		"format-charging-100": "",
+		"format-charging-99": "{time}",
+		"format-charging-critical": "{time}",
+		"format-charging-warning": "{time}",
+		"format-discharging-99": "{time}",
+		"format-full": "",
+		"format-plugged": "",
+		"format-time": "{H}:{m}",
 		"interval": 5,
+		"max-length": 25,
+		"on-click": "gnome-power-statistics",
 		"states": {
 			"100": 100,
 			"99": 99,
 			"warning": 30,
 			"critical": 5
 		},
-		"format": "",
-		"format-charging-100": "",
-		"format-charging-99": "{time}",
-		"format-discharging-99": "{time}",
-		"format-charging-warning": "{time}",
-		"format-charging-critical": "{time}",
-		"format-plugged": "",
-		"format-time": "{H}:{m}",
-		"tooltip":false,
-		"format-full": "",
-		"max-length": 25,
-		"on-click": "gnome-power-statistics"
-	},
-	"sway/window": {
-		"max-length": 150,
-		"tooltip": false,
+		"tooltip":false
 	},
 	"hyprland/window": {
 		"max-length": 150,
-		"tooltip": false,
-		"separate-outputs": true
+		"separate-outputs": true,
+		"tooltip": false
 	},
 	"custom/mako": {
+		"exec": "printf '{\"alt\":\"%s\",\"tooltip\":\"%s\",\"class\":\"%s\"}' $(makoctl mode | rg -q 'do-not-disturb' && echo dnd || echo default) $(makoctl mode | tail -1) $(makoctl mode | tail -1)",
+		"format": "{}{icon:1}",
 		"format-icons": {
 			"default":"󰂚",
 			"dnd":"󰂛"
 		},
 		"interval": "once",
-		"return-type": "json",
-		"format": "{}{icon:1}",
-		"on-click-right": "makoctl mode -t do-not-disturb ; pkill -RTMIN+11 waybar",
-		"exec": "printf '{\"alt\":\"%s\",\"tooltip\":\"%s\",\"class\":\"%s\"}' $(makoctl mode | rg -q 'do-not-disturb' && echo dnd || echo default) $(makoctl mode | tail -1) $(makoctl mode | tail -1)",
-		"signal": 11,
-		"on-scroll-up": "makoctl restore",
-		"on-scroll-down": "makoctl dismiss",
 		"on-click": "makoctl restore",
-		"on-click-middle": "makoctl restore && makoctl restore && makoctl restore && makoctl restore && makoctl restore && makoctl restore"
+		"on-click-middle": "makoctl restore && makoctl restore && makoctl restore && makoctl restore && makoctl restore && makoctl restore",
+		"on-click-right": "makoctl mode -t do-not-disturb ; pkill -RTMIN+11 waybar",
+		"on-scroll-down": "makoctl dismiss",
+		"on-scroll-up": "makoctl restore",
+		"return-type": "json",
+		"signal": 11
 	},
 	"systemd-failed-units": {
-		"hide-on-ok": true,
 		"format": "✗ {nr_failed}",
+		"hide-on-ok": true,
 		"system": true,
 		"user": false
 	},
 	"privacy": {
-		"icon-spacing": 0,
 		"icon-size": 13,
-		"transition-duration": 250,
+		"icon-spacing": 0,
 		"modules": [
 			{
 				"type": "screenshare",
@@ -318,69 +290,79 @@
 				"tooltip": true,
 				"tooltip-icon-size": 24
 			}
-		]
+		],
+		"transition-duration": 250
 	},
 	"pulseaudio#source": {
 		"format": "{format_source}",
 		"format-source": "󰍬",
-		"format-source-muted": "󰍭",
-		"tooltip": false,
-		"on-click": "pkill pavucontrol ; pavucontrol",
+		"format-source-muted": "󰍮",
+		"on-click": "pkill -15 pavucontrol ; pavucontrol",
+		"on-click-middle": "wpctl set-default $(pw-dump | jaq -r '.[]|select(.type==\"PipeWire:Interface:Node\" and .info.props[\"media.class\"]==\"Audio/Sink\")|[.id,.info.props[\"node.name\"],.info.props[\"node.description\"]]|@tsv' | awk -F'\\t' -v d=\"$(wpctl inspect @DEFAULT_AUDIO_SINK@|awk -F'\\\"' '/node.name/{print $2;exit}')\" 'BEGIN{c=\"walker -x -d -p \\\"Audio Device: \\\"\"}$2!=d&&$2!=\"easyeffects_sink\"{a[$3]=$1;devs++;print $3|&c}END{if(devs>1){close(c,\"to\");c|&getline p;if(p!=\"\"){print a[p];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"p\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}else if(devs==1){for(k in a){print a[k];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"k\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}}') >/dev/null && pw-play --volume=0.2 /run/current-system/sw/share/sounds/freedesktop/stereo/audio-volume-change.oga >/dev/null &!",
 		"on-click-right": "wpctl set-mute @DEFAULT_SOURCE@ toggle ; wpctl get-volume @DEFAULT_SOURCE@ | rg -q 'MUTED' && notify-send ' Mic Muted' -h string:x-canonical-private-synchronous:mic-state || notify-send --urgency=low ' Mic unmuted' -h string:x-canonical-private-synchronous:mic-state",
-		"on-click-middle": "wpctl set-default $(pw-cli i $(pactl list sinks | rg --fixed-strings -B 1 \"$(pactl list sinks | rg Description: | sd '	Description: ' '' | sd 'Easy Effects Sink' '' | sd --fixed-strings \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" '' | rg '.' || echo \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" | tofi --prompt-text \" \" --height 40% --width 40% --auto-accept-single true )\" | rg Name: | awk '{print $2}' ) | rg -oP 'id: \\K\\w+') && notify-send --urgency=low --icon=/usr/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" -h string:x-canonical-private-synchronous:sink-state && pw-play --volume=0.2 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga &!",
+		"tooltip": false
     },
+	"wireplumber#source": {
+		"node-type": "Audio/Source",
+		"format": "󰍬",
+		"format-muted": "󰍮",
+		"on-click": "pkill -15 pavucontrol ; pavucontrol",
+		"on-click-middle": "wpctl set-default $(pw-dump | jaq -r '.[]|select(.type==\"PipeWire:Interface:Node\" and .info.props[\"media.class\"]==\"Audio/Sink\")|[.id,.info.props[\"node.name\"],.info.props[\"node.description\"]]|@tsv' | awk -F'\\t' -v d=\"$(wpctl inspect @DEFAULT_AUDIO_SINK@|awk -F'\\\"' '/node.name/{print $2;exit}')\" 'BEGIN{c=\"walker -x -d -p \\\"Audio Device: \\\"\"}$2!=d&&$2!=\"easyeffects_sink\"{a[$3]=$1;devs++;print $3|&c}END{if(devs>1){close(c,\"to\");c|&getline p;if(p!=\"\"){print a[p];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"p\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}else if(devs==1){for(k in a){print a[k];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"k\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}}') >/dev/null && pw-play --volume=0.2 /run/current-system/sw/share/sounds/freedesktop/stereo/audio-volume-change.oga >/dev/null &!",
+		"on-click-right": "wpctl set-mute @DEFAULT_SOURCE@ toggle ; wpctl get-volume @DEFAULT_SOURCE@ | rg -q 'MUTED' && notify-send ' Mic Muted' -h string:x-canonical-private-synchronous:mic-state || notify-send --urgency=low ' Mic unmuted' -h string:x-canonical-private-synchronous:mic-state",
+		"tooltip": false
+	},
 //	"pulseaudio#name": {
 //		"format": "{desc}",
 //		"max-length": 38,
-//		"tooltip": false,
-//		"on-click-middle": "pkill pavucontrol ; pavucontrol",
-//		"on-click": "wpctl set-default $(pw-cli i $(pactl list sinks | rg --fixed-strings -B 1 \"$(pactl list sinks | rg Description: | sd '	Description: ' '' | sd 'Easy Effects Sink' '' | sd --fixed-strings \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" '' | rg '.' || echo \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" | tofi --prompt-text \" \" --height 40% --width 40% --auto-accept-single true )\" | rg Name: | awk '{print $2}' ) | rg -oP 'id: \\K\\w+') && notify-send --urgency=low --icon=/usr/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \"$(pactl list sinks | rg -A 1 \"Name: $(pactl get-default-sink)\" | rg Description: | sd '	Description: ' '')\" -h string:x-canonical-private-synchronous:sink-state && pw-play --volume=0.2 /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga &!",
+//		"on-click": "wpctl set-default $(pw-dump | jaq -r '.[]|select(.type==\"PipeWire:Interface:Node\" and .info.props[\"media.class\"]==\"Audio/Sink\")|[.id,.info.props[\"node.name\"],.info.props[\"node.description\"]]|@tsv' | awk -F'\\t' -v d=\"$(wpctl inspect @DEFAULT_AUDIO_SINK@|awk -F'\\\"' '/node.name/{print $2;exit}')\" 'BEGIN{c=\"walker -x -d -p \\\"Audio Device: \\\"\"}$2!=d&&$2!=\"easyeffects_sink\"{a[$3]=$1;devs++;print $3|&c}END{if(devs>1){close(c,\"to\");c|&getline p;if(p!=\"\"){print a[p];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"p\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}else if(devs==1){for(k in a){print a[k];system(\"notify-send --urgency=low --icon=/run/current-system/sw/share/icons/Flat-Remix-Red-Dark/panel/audio-volume-high-symbolic.svg \\\"\"k\"\\\" -h string:x-canonical-private-synchronous:sink-state\")}}}') >/dev/null && pw-play --volume=0.2 /run/current-system/sw/share/sounds/freedesktop/stereo/audio-volume-change.oga >/dev/null &!",
+//		"on-click-middle": "pkill -15 pavucontrol ; pavucontrol",
+//		"tooltip": false
 //    },
 	"group/audio": {
+		"drawer": {
+			"transition-duration": 500,
+			"transition-left-to-right": false
+		},
 		"orientation": "horizontal",
-		"modules": [ 
+		"modules": [
 //			"wireplumber#icon",
 			"pulseaudio#sink",
 //			"pulseaudio#name",
 			"pulseaudio/slider"
-		],
-		"drawer": {
-			"transition-duration": 500,
-			"transition-left-to-right": false,
-		},
+		]
 	},
 	"group/network": {
-		"orientation": "horizontal",
-		"modules": [
-			"network#icon",
-			"network#ssid",
-		],
 		"drawer": {
 			"transition-duration": 500,
-			"transition-left-to-right": false,
+			"transition-left-to-right": false
 		},
+		"modules": [
+			"network#icon",
+			"network#ssid"
+		],
+		"orientation": "horizontal"
 	},
 	"group/battery": {
-		"orientation": "horizontal",
-		"modules": [ 
+		"drawer": {
+			"transition-duration": 500,
+			"transition-left-to-right": false
+		},
+		"modules": [
 			"battery#icon",
 			"battery#time",
 			"power-profiles-daemon"
 		],
-		"drawer": {
-			"transition-duration": 500,
-			"transition-left-to-right": false,
-		},
+		"orientation": "horizontal"
 	},
 	"group/misc": {
-		"orientation": "horizontal",
-		"modules": [ 
+		"drawer": {
+			"transition-duration": 500,
+			"transition-left-to-right": false
+		},
+		"modules": [
 			"idle_inhibitor",
 			"custom/mako"
 		],
-		"drawer": {
-			"transition-duration": 500,
-			"transition-left-to-right": false,
-		},
-	},
+		"orientation": "horizontal"
+	}
 }
