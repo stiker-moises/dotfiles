@@ -1,2 +1,2 @@
 enable_selector = true
-selector = "tofi --prompt-text='Open With: '"
+selector = "walker -d --prompt-text='Open With: '"
