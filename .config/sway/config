@@ -1,5 +1,0 @@
-include {
-	~/.config/sway/modules/*
-	"~/.config/sway/$(cat /etc/hostname)"
-	/etc/sway/config.d/*
-}
