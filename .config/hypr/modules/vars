@@ -3,10 +3,10 @@ $browser = zsh -c "${BROWSER:-librewolf > /dev/null }"
 $clipshow = zsh -c "${CLIPBOARDMANAGERSHOW:-copyq show > /dev/null }"
 $cliptype = sleep 0.3 && ydotool click 0xC0 > /dev/null && sleep 0.2 && copyq clipboard | ydotool type -d 3 -H 2 -f - > /dev/null &!
 $files = zsh -c "${FILEMANAGER:-dolphin > /dev/null }"
-$focusd = hyprctl dispatch movefocus d > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
-$focusl = hyprctl dispatch movefocus l > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
-$focusr = hyprctl dispatch movefocus r > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
-$focusu = hyprctl dispatch movefocus u > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
+$focusd = hyprctl dispatch fullscreen 0, unset > /dev/null ; hyprctl dispatch movefocus d > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
+$focusl = hyprctl dispatch fullscreen 0, unset > /dev/null ; hyprctl dispatch movefocus l > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
+$focusr = hyprctl dispatch fullscreen 0, unset > /dev/null ; hyprctl dispatch movefocus r > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
+$focusu = hyprctl dispatch fullscreen 0, unset > /dev/null ; hyprctl dispatch movefocus u > /dev/null && hyprctl dispatch alterzorder top, active > /dev/null
 $launcher = walker > /dev/null &!
 $lightdown = brightnessctl set 10%- > /dev/null && swayosd-client --monitor "$(hyprctl monitors -j | jaq -r '.[] | select(.focused == true).name')" --brightness -0 > /dev/null &!
 $lightup = brightnessctl set 10%+ > /dev/null && swayosd-client --monitor "$(hyprctl monitors -j | jaq -r '.[] | select(.focused == true).name')" --brightness +0 > /dev/null &!
